@@ -37,12 +37,13 @@ function App() {
   })
 
   useEffect(() => {
+    const minute = Math.floor(timer / 60)
+    const second = timer - 60 * minute
+    setMinutes(minute.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
+    setSeconds(second.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
 
-    const interval = setTimeout(() => {
-      const minute = Math.floor(timer / 60)
-      const second = timer - 60 * minute
-      setMinutes(minute.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
-      setSeconds(second.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}))
+    const interval = setInterval(() => {
+     
       if (isPlaying == true && isPaused == false) {
         setTimer(timer - 1)
       
@@ -80,6 +81,7 @@ function App() {
   }, [timer, currentSession, isPlaying, localStates, isPaused, session, numberOfSessions, rest, finalRest])
 
   const onPlay = () => {
+    setTimer(timer => timer -1)
     setIsPlaying(true)
     setPaused(false)
   }
